@@ -433,7 +433,7 @@
 
               <label class="zoom-control">
                 <span>缩放</span>
-                <input id="zoomSlider" type="range" min="45" max="150" value="72">
+                <input id="zoomSlider" type="range" min="45" max="750" value="72">
                 <strong id="zoomLabel">72%</strong>
               </label>
 
@@ -635,6 +635,8 @@
 
     const MS_HOUR = 60 * 60 * 1000;
     const MS_DAY = 24 * MS_HOUR;
+    const ZOOM_MIN = 0.45;
+    const ZOOM_MAX = 7.5;
     const timeline = {
       start: parseTime(timelineConfig.defaultStart),
       end: parseTime(timelineConfig.defaultEnd)
@@ -1319,7 +1321,7 @@
     function setScale(nextScale, anchorX = world.labelWidth + plotWidth() / 2) {
       const oldScale = state.scale;
       const worldAtAnchor = screenToWorldX(anchorX);
-      state.scale = Math.max(0.45, Math.min(1.5, nextScale));
+      state.scale = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, nextScale));
       state.offsetX = worldAtAnchor - (anchorX - world.labelWidth) / state.scale;
       if (oldScale !== state.scale) clampOffset();
       draw();
@@ -1365,7 +1367,7 @@
     });
 
     document.getElementById("applyTimeline").addEventListener("click", applyTimelineRange);
-    document.getElementById("zoomIn").addEventListener("click", () => setScale(state.scale * 1.15));
+    document.getElementById("zoomIn").addEventListener("click", () => setScale(state.scale * 1.35));
     document.getElementById("zoomOut").addEventListener("click", () => setScale(state.scale * 0.85));
     document.getElementById("expandAll").addEventListener("click", () => {
       tracks.forEach((track) => {
@@ -1437,9 +1439,10 @@
         });
         draw();
       } else if (hash === "zoomed") {
-        state.scale = 1.16;
-        state.offsetX = timeToWorld("2025-07-08T00:00");
+        state.scale = ZOOM_MAX;
+        state.offsetX = timeToWorld("2025-07-07T12:00");
         clampOffset();
+        updateStateLabels();
         draw();
       }
     }
