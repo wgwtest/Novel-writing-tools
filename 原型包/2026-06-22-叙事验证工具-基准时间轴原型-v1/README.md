@@ -8,6 +8,8 @@
 - 目标画板：1920 x 1080
 - 目标入口：`source/index.html`
 - 章节管理入口：`source/chapter-workbench.html`
+- 数据入口：`source/data/story.json`
+- 数据结构约束：`source/data/schema.json`
 - 本版主题：以 v9 完整全局时间画布为基准，接入“进入章节函数”的章节管理页面
 
 ## 本版定位
@@ -17,6 +19,23 @@
 本版不重画、不简化全局时间画布。此前已确认的缩放、拖拽、章节覆盖、故事线、人物子线、人物虚段和 Inspector 逻辑继续保留。
 
 新增能力是：选中任意章节后，右侧 Inspector 的“进入章节函数”按钮会进入章节管理页面，用该章节 ID 和标题作为上下文。
+
+## 运行方式
+
+本版已经支持从 JSON 读取结构化数据。推荐从 `source/` 目录启动本地静态服务器：
+
+```powershell
+cd C:\OpenCodeWorkSpace\TestProject\文章重写\验证工具\原型包\2026-06-22-叙事验证工具-基准时间轴原型-v1\source
+python -m http.server 4173
+```
+
+然后打开：
+
+```text
+http://127.0.0.1:4173/index.html
+```
+
+如果直接用 `file://` 打开，浏览器可能禁止 `fetch("./data/story.json")`。页面会自动退回内置演示数据，但这不适合后续真实数据构建。
 
 本版默认时间范围为：
 
@@ -98,6 +117,18 @@ endAt
 ```
 
 入口会把章节 ID、章节标题、起止时间传给 `chapter-workbench.html`。章节工作台负责处理本章的“章前输入 / 中段处理 / 章后输出”，但不反向简化全局时间轴。
+
+### 6. 结构化数据入口
+
+`source/data/story.json` 是当前原型的数据入口。它包含：
+
+- `timelineConfig`：全局时间范围。
+- `chapters`：章节覆盖层。
+- `characters`：人物字典。
+- `tracks`：故事线和人物子线配置。
+- `events`：故事事件与人物参与片段。
+
+`source/data/schema.json` 定义这些字段的基本结构。后续从第一章到第二十章抽取真实数据时，应优先更新 `story.json`，不要继续把新数据写死在 HTML 里。
 
 ## 图文证据链
 

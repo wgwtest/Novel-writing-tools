@@ -412,7 +412,7 @@
           <div>
             <div class="topbar-title">基准时间轴原型 V1<span>横轴由真实日期驱动，章节覆盖正文切片。</span></div>
           </div>
-          <div class="route">时间轴 / <strong id="route-state">画布模式</strong></div>
+          <div class="route">时间轴 / <strong id="route-state">画布模式</strong> / <span id="data-source-state">DATA 内置演示数据</span></div>
         </header>
 
         <section class="workspace">
@@ -639,6 +639,8 @@
       start: parseTime(timelineConfig.defaultStart),
       end: parseTime(timelineConfig.defaultEnd)
     };
+    let storyDataSource = "内置演示数据";
+    let storyDataError = "";
 
     const hitRegions = [];
     let rowLayout = [];
@@ -649,6 +651,46 @@
 
     function characterEvent(id, track, character, startAt, endAt, title, code, tone, input, output, risk, visibility = "explicit") {
       return { id, kind: "character", track, character, startAt, endAt, title, code, tone, input, output, risk, visibility };
+    }
+
+    function applyStoryData(data) {
+      if (!data || typeof data !== "object") throw new Error("story.json 必须是对象。");
+      const nextTimeline = data.timelineConfig || data.timeline || {};
+      const nextChapters = data.chapters;
+      const nextCharacters = data.characters;
+      const nextTracks = data.tracks;
+      const nextEvents = data.events;
+      if (!Array.isArray(nextChapters)) throw new Error("story.json 缺少 chapters 数组。");
+      if (!nextCharacters || typeof nextCharacters !== "object") throw new Error("story.json 缺少 characters 对象。");
+      if (!Array.isArray(nextTracks)) throw new Error("story.json 缺少 tracks 数组。");
+      if (!Array.isArray(nextEvents)) throw new Error("story.json 缺少 events 数组。");
+
+      Object.assign(timelineConfig, nextTimeline);
+      chapters.splice(0, chapters.length, ...nextChapters);
+      Object.keys(characters).forEach((key) => delete characters[key]);
+      Object.assign(characters, nextCharacters);
+      tracks.splice(0, tracks.length, ...nextTracks);
+      events.splice(0, events.length, ...nextEvents);
+
+      timeline.start = parseTime(timelineConfig.defaultStart);
+      timeline.end = parseTime(timelineConfig.defaultEnd);
+      document.getElementById("timelineStart").value = timelineConfig.defaultStart;
+      document.getElementById("timelineEnd").value = timelineConfig.defaultEnd;
+    }
+
+    async function loadStoryData() {
+      try {
+        const response = await fetch("data/story.json", { cache: "no-store" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+        applyStoryData(data);
+        storyDataSource = "data/story.json";
+        storyDataError = "";
+      } catch (error) {
+        storyDataSource = "内置演示数据";
+        storyDataError = error.message;
+      }
+      document.getElementById("data-source-state").textContent = `DATA ${storyDataSource}`;
     }
 
     function resizeCanvas() {
@@ -1097,8 +1139,10 @@
     function updateInspectorEmpty() {
       document.getElementById("selectionKind").textContent = "No Selection";
       document.getElementById("selectionTitle").textContent = "尚未选中对象";
-      document.getElementById("selectionDesc").textContent = "请在画布中点击章节、主线标题、人物条或事件块。系统会先显示 Inspector，不会自动进入详情。";
-      document.getElementById("selectionTags").innerHTML = '<span class="tag">WAITING</span>';
+      document.getElementById("selectionDesc").textContent = storyDataError
+        ? `当前使用内置演示数据。JSON 读取失败：${storyDataError}`
+        : "请在画布中点击章节、主线标题、人物条或事件块。系统会先显示 Inspector，不会自动进入详情。";
+      document.getElementById("selectionTags").innerHTML = `<span class="tag">WAITING</span><span class="tag">DATA ${storyDataSource}</span>`;
       document.getElementById("summaryCoord").textContent = "未选中";
       document.getElementById("summaryTrack").textContent = "未选中";
       document.getElementById("summaryInput").textContent = "等待选择对象。";
@@ -1352,48 +1396,60 @@
 
     window.addEventListener("resize", resizeCanvas);
 
-    resizeCanvas();
-    updateInspectorEmpty();
-
-    const hash = location.hash.replace("#", "");
-    if (hash === "track-selected") {
-      const media = trackById("media");
-      media.expanded = false;
-      selectRegion({ type: "track", id: "media" });
-    } else if (hash === "character-selected") {
-      trackById("interview").expanded = true;
-      selectRegion({ type: "character", id: "interview:yushu", track: "interview", character: "yushu" });
-    } else if (hash === "event-selected") {
-      trackById("interview").expanded = true;
-      selectRegion({ type: "event", id: "ce-interview-yushu-15" });
-    } else if (hash === "background-selected") {
-      trackById("temple").expanded = true;
-      selectRegion({ type: "event", id: "ce-temple-yushu-bg-13" });
-    } else if (hash.startsWith("chapter=")) {
-      const chapterId = decodeURIComponent(hash.slice("chapter=".length));
-      if (chapters.some((chapter) => chapter.id === chapterId)) {
-        selectRegion({ type: "chapter", id: chapterId });
+    function applyInitialRoute() {
+      const hash = location.hash.replace("#", "");
+      if (hash === "track-selected") {
+        const media = trackById("media");
+        if (media) media.expanded = false;
+        selectRegion({ type: "track", id: "media" });
+      } else if (hash === "character-selected") {
+        const interview = trackById("interview");
+        if (interview) interview.expanded = true;
+        selectRegion({ type: "character", id: "interview:yushu", track: "interview", character: "yushu" });
+      } else if (hash === "event-selected") {
+        const interview = trackById("interview");
+        if (interview) interview.expanded = true;
+        selectRegion({ type: "event", id: "ce-interview-yushu-15" });
+      } else if (hash === "background-selected") {
+        const temple = trackById("temple");
+        if (temple) temple.expanded = true;
+        selectRegion({ type: "event", id: "ce-temple-yushu-bg-13" });
+      } else if (hash.startsWith("chapter=")) {
+        const chapterId = decodeURIComponent(hash.slice("chapter=".length));
+        if (chapters.some((chapter) => chapter.id === chapterId)) {
+          selectRegion({ type: "chapter", id: chapterId });
+        }
+      } else if (hash === "chapter-selected") {
+        selectRegion({ type: "chapter", id: "C15" });
+      } else if (hash === "event-detail") {
+        const interview = trackById("interview");
+        if (interview) interview.expanded = true;
+        selectRegion({ type: "event", id: "ce-interview-yushu-15" });
+        enterEventDetail();
+      } else if (hash === "chapter-detail") {
+        selectRegion({ type: "chapter", id: "C15" });
+        enterChapterDetail();
+      } else if (hash === "all-expanded") {
+        tracks.forEach((track) => {
+          if (track.characters.length > 0) track.expanded = true;
+        });
+        draw();
+      } else if (hash === "zoomed") {
+        state.scale = 1.16;
+        state.offsetX = timeToWorld("2025-07-15T00:00");
+        clampOffset();
+        draw();
       }
-    } else if (hash === "chapter-selected") {
-      selectRegion({ type: "chapter", id: "C15" });
-    } else if (hash === "event-detail") {
-      trackById("interview").expanded = true;
-      selectRegion({ type: "event", id: "ce-interview-yushu-15" });
-      enterEventDetail();
-    } else if (hash === "chapter-detail") {
-      selectRegion({ type: "chapter", id: "C15" });
-      enterChapterDetail();
-    } else if (hash === "all-expanded") {
-      tracks.forEach((track) => {
-        if (track.characters.length > 0) track.expanded = true;
-      });
-      draw();
-    } else if (hash === "zoomed") {
-      state.scale = 1.16;
-      state.offsetX = timeToWorld("2025-07-15T00:00");
-      clampOffset();
-      draw();
     }
+
+    async function boot() {
+      await loadStoryData();
+      resizeCanvas();
+      updateInspectorEmpty();
+      applyInitialRoute();
+    }
+
+    boot();
   </script>
 </body>
 </html>

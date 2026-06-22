@@ -1,0 +1,659 @@
+{
+  "meta": {
+    "name": "??????? V1 ????",
+    "version": "0.1.0",
+    "source": "? index.html ?????????????????????????????????",
+    "updatedAt": "2026-06-22"
+  },
+  "timelineConfig": {
+    "defaultStart": "2025-07-07T08:00",
+    "defaultEnd": "2025-08-01T00:00"
+  },
+  "chapters": [
+    {
+      "id": "C10",
+      "title": "采访启动",
+      "startAt": "2025-07-07T08:00",
+      "endAt": "2025-07-08T06:00",
+      "input": "专题裂开，叶依人进入记者身份。",
+      "inside": "建立采访身份和第一个爆点。",
+      "output": "采访主线启动，张航远发现爆点。"
+    },
+    {
+      "id": "C11",
+      "title": "样本成形",
+      "startAt": "2025-07-08T06:00",
+      "endAt": "2025-07-10T18:00",
+      "input": "走访材料进入叙事。",
+      "inside": "把苦难转成可追踪事实。",
+      "output": "职业病证据线获得初步材料。"
+    },
+    {
+      "id": "C12",
+      "title": "显形加压",
+      "startAt": "2025-07-10T18:00",
+      "endAt": "2025-07-12T20:00",
+      "input": "大仙祠救助和操控同时显形。",
+      "inside": "判断压力升高。",
+      "output": "会议结果和秩序吸收获得前置。"
+    },
+    {
+      "id": "C13",
+      "title": "会议结果",
+      "startAt": "2025-07-13T08:00",
+      "endAt": "2025-07-15T12:00",
+      "input": "会议暂缓和电视台口径变化。",
+      "inside": "压力被转入体面秩序。",
+      "output": "会后缓冲开始。"
+    },
+    {
+      "id": "C14",
+      "title": "会后吸收",
+      "startAt": "2025-07-15T12:00",
+      "endAt": "2025-07-17T18:00",
+      "input": "慈善、媒体和资源口径吸收冲突。",
+      "inside": "缓冲不是静止，而是再分配。",
+      "output": "C15 私线偏移获得条件。"
+    },
+    {
+      "id": "C15",
+      "title": "私线偏移",
+      "startAt": "2025-07-18T08:00",
+      "endAt": "2025-07-20T12:00",
+      "input": "多轨事件同时进入章节。",
+      "inside": "张航远从边缘化走向私线证明。",
+      "output": "C16 诱导风险和群众争夺前置。"
+    },
+    {
+      "id": "C16",
+      "title": "群众争夺",
+      "startAt": "2025-07-21T08:00",
+      "endAt": "2025-07-23T18:00",
+      "input": "群众真实处境和解释权冲突。",
+      "inside": "各方争夺解释权。",
+      "output": "流血冲突获得社会压力。"
+    },
+    {
+      "id": "C17",
+      "title": "流血冲突",
+      "startAt": "2025-07-24T08:00",
+      "endAt": "2025-07-26T10:00",
+      "input": "诱导、镜头压力和群众情绪叠加。",
+      "inside": "现实冲突被点燃。",
+      "output": "吕玉线接管的入口出现。"
+    },
+    {
+      "id": "C18",
+      "title": "吕玉接管",
+      "startAt": "2025-07-27T08:00",
+      "endAt": "2025-07-29T12:00",
+      "input": "前台崩塌后主线切换。",
+      "inside": "吕玉接管更深层敌手结构。",
+      "output": "后续进入新主线。"
+    },
+    {
+      "id": "C19",
+      "title": "深入敌境",
+      "startAt": "2025-07-29T12:00",
+      "endAt": "2025-07-30T22:00",
+      "input": "冲突后果需要处理。",
+      "inside": "主线深入敌方系统。",
+      "output": "现实反制被打开。"
+    },
+    {
+      "id": "C20",
+      "title": "现实反制",
+      "startAt": "2025-07-31T08:00",
+      "endAt": "2025-08-01T00:00",
+      "input": "敌境信息返回现实层。",
+      "inside": "叶伊人现实手段反制。",
+      "output": "吕玉主线巩固。"
+    }
+  ],
+  "characters": {
+    "yiren": {
+      "name": "叶依人",
+      "short": "叶",
+      "color": "#087268",
+      "soft": "#e0f0ed"
+    },
+    "zhang": {
+      "name": "张航远",
+      "short": "张",
+      "color": "#b42b40",
+      "soft": "#f3d7de"
+    },
+    "yushu": {
+      "name": "禹树",
+      "short": "禹",
+      "color": "#6b4f86",
+      "soft": "#e9e1f0"
+    },
+    "lvyu": {
+      "name": "吕玉",
+      "short": "吕",
+      "color": "#315f83",
+      "soft": "#dbe8f1"
+    },
+    "linqian": {
+      "name": "林倩",
+      "short": "林",
+      "color": "#a66a10",
+      "soft": "#f3e4c8"
+    }
+  },
+  "tracks": [
+    {
+      "id": "main",
+      "name": "故事主轴",
+      "sub": "跨章节推进",
+      "expanded": false,
+      "characters": []
+    },
+    {
+      "id": "interview",
+      "name": "采访线",
+      "sub": "叶依人行动",
+      "expanded": true,
+      "characters": [
+        "yiren",
+        "zhang",
+        "yushu"
+      ]
+    },
+    {
+      "id": "temple",
+      "name": "大仙祠线",
+      "sub": "解释权争夺",
+      "expanded": true,
+      "characters": [
+        "yushu",
+        "lvyu",
+        "yiren"
+      ]
+    },
+    {
+      "id": "media",
+      "name": "电视台线",
+      "sub": "口径和资源",
+      "expanded": false,
+      "characters": [
+        "yiren",
+        "zhang"
+      ]
+    },
+    {
+      "id": "proof",
+      "name": "职业病证据线",
+      "sub": "材料和边界",
+      "expanded": false,
+      "characters": [
+        "yiren",
+        "linqian"
+      ]
+    },
+    {
+      "id": "zhang",
+      "name": "张航远线",
+      "sub": "目标漂移",
+      "expanded": true,
+      "characters": [
+        "zhang",
+        "yushu"
+      ]
+    },
+    {
+      "id": "lvyu",
+      "name": "吕玉线",
+      "sub": "后段接管",
+      "expanded": false,
+      "characters": [
+        "lvyu"
+      ]
+    },
+    {
+      "id": "fragment",
+      "name": "碎片伏笔",
+      "sub": "必须对齐章节",
+      "expanded": false,
+      "characters": [
+        "yushu"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": "e-main-10",
+      "kind": "story",
+      "track": "main",
+      "startAt": "2025-07-07T08:00",
+      "endAt": "2025-07-10T12:00",
+      "title": "采访启动",
+      "code": "E010-E014",
+      "tone": "main",
+      "input": "专题裂开，采访身份建立。",
+      "output": "完成主轴启动。",
+      "risk": "如果前置不足，后续压力会失真。"
+    },
+    {
+      "id": "e-main-13",
+      "kind": "story",
+      "track": "main",
+      "startAt": "2025-07-13T08:00",
+      "endAt": "2025-07-17T16:00",
+      "title": "会议结果落地",
+      "code": "E021-E028",
+      "tone": "main",
+      "input": "会议暂缓被各方吸收。",
+      "output": "把冲突转入会后缓冲。",
+      "risk": "缓冲不能写成静止。"
+    },
+    {
+      "id": "e-main-15",
+      "kind": "story",
+      "track": "main",
+      "startAt": "2025-07-18T08:00",
+      "endAt": "2025-07-23T16:00",
+      "title": "会后转争夺",
+      "code": "E029-E041",
+      "tone": "main",
+      "input": "会后吸收完成。",
+      "output": "转入群众争夺。",
+      "risk": "主轴必须压住碎片线。"
+    },
+    {
+      "id": "e-interview-11",
+      "kind": "story",
+      "track": "interview",
+      "startAt": "2025-07-08T08:00",
+      "endAt": "2025-07-12T10:00",
+      "title": "走访与材料整理",
+      "code": "C11-C12",
+      "tone": "main",
+      "input": "叶依人开始形成事实链。",
+      "output": "事实链可被追踪。",
+      "risk": "材料不能变成纯说明。"
+    },
+    {
+      "id": "e-interview-15",
+      "kind": "story",
+      "track": "interview",
+      "startAt": "2025-07-18T10:00",
+      "endAt": "2025-07-20T10:00",
+      "title": "重新接触群众",
+      "code": "C15",
+      "tone": "main",
+      "input": "会后口径重写。",
+      "output": "群众真实处境重新进入视野。",
+      "risk": "需要显示解释权变化。"
+    },
+    {
+      "id": "e-temple-11",
+      "kind": "story",
+      "track": "temple",
+      "startAt": "2025-07-08T12:00",
+      "endAt": "2025-07-12T20:00",
+      "title": "救助显形",
+      "code": "C11-C12",
+      "tone": "temple",
+      "input": "大仙祠从背景进入可见层。",
+      "output": "救助与控制同时出现。",
+      "risk": "不要只写成善意救助。"
+    },
+    {
+      "id": "e-temple-16",
+      "kind": "story",
+      "track": "temple",
+      "startAt": "2025-07-21T08:00",
+      "endAt": "2025-07-23T18:00",
+      "title": "重新争夺解释权",
+      "code": "C16",
+      "tone": "risk",
+      "input": "群众争夺启动。",
+      "output": "大仙祠重新争夺叙述。",
+      "risk": "可能抢走采访线。"
+    },
+    {
+      "id": "e-media-13",
+      "kind": "story",
+      "track": "media",
+      "startAt": "2025-07-13T08:00",
+      "endAt": "2025-07-16T12:00",
+      "title": "口径重写",
+      "code": "C13-C14",
+      "tone": "media",
+      "input": "会议结果进入电视台系统。",
+      "output": "媒体口径改写现实感知。",
+      "risk": "需要和采访线形成压力。"
+    },
+    {
+      "id": "e-media-16",
+      "kind": "story",
+      "track": "media",
+      "startAt": "2025-07-21T12:00",
+      "endAt": "2025-07-23T12:00",
+      "title": "镜头压力",
+      "code": "C16",
+      "tone": "risk",
+      "input": "群众争夺升级。",
+      "output": "镜头介入现实冲突。",
+      "risk": "可能提前引爆。"
+    },
+    {
+      "id": "e-proof-14",
+      "kind": "story",
+      "track": "proof",
+      "startAt": "2025-07-15T12:00",
+      "endAt": "2025-07-20T12:00",
+      "title": "化学证据预热",
+      "code": "C14-C15",
+      "tone": "warn",
+      "input": "样本和材料尚未闭合。",
+      "output": "建立取样边界。",
+      "risk": "不能提前裁决职业病真相。"
+    },
+    {
+      "id": "e-proof-17",
+      "kind": "story",
+      "track": "proof",
+      "startAt": "2025-07-24T10:00",
+      "endAt": "2025-07-26T10:00",
+      "title": "不能提前裁决",
+      "code": "C17",
+      "tone": "risk",
+      "input": "证据线压力上升。",
+      "output": "提醒证据边界。",
+      "risk": "过强会压过采访和群众争夺。"
+    },
+    {
+      "id": "e-zhang-10",
+      "kind": "story",
+      "track": "zhang",
+      "startAt": "2025-07-07T12:00",
+      "endAt": "2025-07-08T06:00",
+      "title": "发现爆点",
+      "code": "C10",
+      "tone": "warn",
+      "input": "张航远发现新闻价值。",
+      "output": "形成自我证明欲。",
+      "risk": "需要后续承接。"
+    },
+    {
+      "id": "e-zhang-15",
+      "kind": "story",
+      "track": "zhang",
+      "startAt": "2025-07-13T08:00",
+      "endAt": "2025-07-20T12:00",
+      "title": "边缘化到私线偏移",
+      "code": "C13-C15",
+      "tone": "risk",
+      "input": "会议暂缓，张航远被边缘化。",
+      "output": "他把私线理解为补足采访线。",
+      "risk": "缺少诱导链会显得突兀。"
+    },
+    {
+      "id": "e-zhang-16",
+      "kind": "story",
+      "track": "zhang",
+      "startAt": "2025-07-21T08:00",
+      "endAt": "2025-07-23T18:00",
+      "title": "诱导风险",
+      "code": "C16",
+      "tone": "risk",
+      "input": "私线动机形成。",
+      "output": "外部压力推他错站边。",
+      "risk": "需要连续诱导链。"
+    },
+    {
+      "id": "e-lvyu-17",
+      "kind": "story",
+      "track": "lvyu",
+      "startAt": "2025-07-24T08:00",
+      "endAt": "2025-07-29T12:00",
+      "title": "主线接管",
+      "code": "C17-C18",
+      "tone": "main",
+      "input": "前台崩塌，现实冲突升级。",
+      "output": "吕玉接管更深层敌手结构。",
+      "risk": "不能来得太突然。"
+    },
+    {
+      "id": "e-frag-14",
+      "kind": "story",
+      "track": "fragment",
+      "startAt": "2025-07-15T12:00",
+      "endAt": "2025-07-17T18:00",
+      "title": "基金入口",
+      "code": "C14",
+      "tone": "warn",
+      "input": "碎片伏笔落入章节格。",
+      "output": "提供群众争夺入口。",
+      "risk": "必须服务主轴。"
+    },
+    {
+      "id": "ce-interview-yiren-11",
+      "kind": "character",
+      "track": "interview",
+      "character": "yiren",
+      "startAt": "2025-07-08T08:00",
+      "endAt": "2025-07-12T10:00",
+      "title": "事实链走访",
+      "code": "叶依人",
+      "tone": "main",
+      "input": "她进入群众材料。",
+      "output": "采访线获得可追踪事实。",
+      "risk": "材料不能只做情绪展示。",
+      "visibility": "explicit"
+    },
+    {
+      "id": "ce-interview-zhang-13",
+      "kind": "character",
+      "track": "interview",
+      "character": "zhang",
+      "startAt": "2025-07-13T08:00",
+      "endAt": "2025-07-17T12:00",
+      "title": "被边缘化",
+      "code": "张航远",
+      "tone": "risk",
+      "input": "会议暂缓后失去主导感。",
+      "output": "形成私线证明欲。",
+      "risk": "容易抢走叶依人的采访判断。",
+      "visibility": "explicit"
+    },
+    {
+      "id": "ce-interview-yushu-15",
+      "kind": "character",
+      "track": "interview",
+      "character": "yushu",
+      "startAt": "2025-07-18T08:00",
+      "endAt": "2025-07-20T12:00",
+      "title": "被纳入采访压力",
+      "code": "禹树",
+      "tone": "warn",
+      "input": "采访线触及外围资源入口。",
+      "output": "禹树成为被询问和被误读的对象。",
+      "risk": "不能让他直接替代采访主角。",
+      "visibility": "explicit"
+    },
+    {
+      "id": "ce-temple-yushu-12",
+      "kind": "character",
+      "track": "temple",
+      "character": "yushu",
+      "startAt": "2025-07-10T18:00",
+      "endAt": "2025-07-12T20:00",
+      "title": "情报入口显露",
+      "code": "禹树",
+      "tone": "warn",
+      "input": "大仙祠线暴露解释权入口。",
+      "output": "禹树的资源信息被卷入争夺。",
+      "risk": "他在此线是情报节点，不是硬资产本身。",
+      "visibility": "explicit"
+    },
+    {
+      "id": "ce-temple-yushu-bg-13",
+      "kind": "character",
+      "track": "temple",
+      "character": "yushu",
+      "startAt": "2025-07-13T08:00",
+      "endAt": "2025-07-20T12:00",
+      "title": "情报后台发酵",
+      "code": "禹树",
+      "tone": "warn",
+      "input": "情报入口已经被看见，但正文没有持续跟拍禹树行动。",
+      "output": "后台状态解释后续争夺为何仍有压力。",
+      "risk": "虚段必须保留触发依据，不能当成正文事件。",
+      "visibility": "background"
+    },
+    {
+      "id": "ce-temple-lvyu-16",
+      "kind": "character",
+      "track": "temple",
+      "character": "lvyu",
+      "startAt": "2025-07-21T08:00",
+      "endAt": "2025-07-29T12:00",
+      "title": "接管阴影",
+      "code": "吕玉",
+      "tone": "main",
+      "input": "群众争夺后出现更深层敌手。",
+      "output": "吕玉线准备接管。",
+      "risk": "过早显形会削弱前台冲突。",
+      "visibility": "background"
+    },
+    {
+      "id": "ce-temple-yiren-11",
+      "kind": "character",
+      "track": "temple",
+      "character": "yiren",
+      "startAt": "2025-07-08T12:00",
+      "endAt": "2025-07-10T12:00",
+      "title": "观察救助逻辑",
+      "code": "叶依人",
+      "tone": "main",
+      "input": "她看到救助和控制并存。",
+      "output": "采访线获得解释权冲突材料。",
+      "risk": "不要写成单纯善恶判断。",
+      "visibility": "explicit"
+    },
+    {
+      "id": "ce-media-yiren-13",
+      "kind": "character",
+      "track": "media",
+      "character": "yiren",
+      "startAt": "2025-07-13T08:00",
+      "endAt": "2025-07-15T12:00",
+      "title": "口径受压",
+      "code": "叶依人",
+      "tone": "media",
+      "input": "电视台口径变化。",
+      "output": "她的采访空间被压缩。",
+      "risk": "媒体线不能只做背景板。",
+      "visibility": "explicit"
+    },
+    {
+      "id": "ce-media-zhang-15",
+      "kind": "character",
+      "track": "media",
+      "character": "zhang",
+      "startAt": "2025-07-18T08:00",
+      "endAt": "2025-07-20T12:00",
+      "title": "私线找镜头",
+      "code": "张航远",
+      "tone": "risk",
+      "input": "他寻找绕开主采访的表达方式。",
+      "output": "诱导风险进入镜头压力。",
+      "risk": "需要外部压力链承接。",
+      "visibility": "explicit"
+    },
+    {
+      "id": "ce-proof-yiren-14",
+      "kind": "character",
+      "track": "proof",
+      "character": "yiren",
+      "startAt": "2025-07-15T12:00",
+      "endAt": "2025-07-20T12:00",
+      "title": "样本边界",
+      "code": "叶依人",
+      "tone": "warn",
+      "input": "材料尚未闭合。",
+      "output": "她维持采访和证据边界。",
+      "risk": "不能提前裁决职业病真相。",
+      "visibility": "explicit"
+    },
+    {
+      "id": "ce-proof-linqian-14",
+      "kind": "character",
+      "track": "proof",
+      "character": "linqian",
+      "startAt": "2025-07-16T08:00",
+      "endAt": "2025-07-17T18:00",
+      "title": "数据校验",
+      "code": "林倩",
+      "tone": "warn",
+      "input": "样本需要技术校验。",
+      "output": "证据线获得方法支撑。",
+      "risk": "工具人化会削弱真实感。",
+      "visibility": "explicit"
+    },
+    {
+      "id": "ce-zhang-zhang-15",
+      "kind": "character",
+      "track": "zhang",
+      "character": "zhang",
+      "startAt": "2025-07-13T08:00",
+      "endAt": "2025-07-20T12:00",
+      "title": "私线偏移",
+      "code": "张航远",
+      "tone": "risk",
+      "input": "他把边缘化理解成失败。",
+      "output": "行动从补采访变成自我证明。",
+      "risk": "缺少诱导链会突兀。",
+      "visibility": "explicit"
+    },
+    {
+      "id": "ce-zhang-yushu-15",
+      "kind": "character",
+      "track": "zhang",
+      "character": "yushu",
+      "startAt": "2025-07-18T08:00",
+      "endAt": "2025-07-20T12:00",
+      "title": "成为诱导锚点",
+      "code": "禹树",
+      "tone": "risk",
+      "input": "禹树的信息被张航远误读。",
+      "output": "同一人物在张航远线里变成诱导锚点。",
+      "risk": "需要和采访线中的禹树区分语义。",
+      "visibility": "explicit"
+    },
+    {
+      "id": "ce-lvyu-lvyu-17",
+      "kind": "character",
+      "track": "lvyu",
+      "character": "lvyu",
+      "startAt": "2025-07-24T08:00",
+      "endAt": "2025-07-29T12:00",
+      "title": "后段接管",
+      "code": "吕玉",
+      "tone": "main",
+      "input": "前台冲突崩塌。",
+      "output": "吕玉开始承接后段主线。",
+      "risk": "不能来得太突然。",
+      "visibility": "explicit"
+    },
+    {
+      "id": "ce-frag-yushu-14",
+      "kind": "character",
+      "track": "fragment",
+      "character": "yushu",
+      "startAt": "2025-07-15T12:00",
+      "endAt": "2025-07-17T18:00",
+      "title": "资源碎片",
+      "code": "禹树",
+      "tone": "warn",
+      "input": "碎片伏笔落入章节格。",
+      "output": "为后续资源争夺留入口。",
+      "risk": "必须服务主轴，不可漂浮。",
+      "visibility": "explicit"
+    }
+  ]
+}
