@@ -32,8 +32,7 @@
 
     html,
     body {
-      width: 1920px;
-      height: 1080px;
+      min-height: 100vh;
       margin: 0;
       overflow: hidden;
       color: var(--ink);
@@ -48,11 +47,11 @@
       position: relative;
       width: 1920px;
       height: 1080px;
+      margin: 0 auto;
       padding: 18px;
     }
 
     .topbar,
-    .toolbar,
     .side-inspector {
       border: 1px solid var(--line);
       background: rgba(255, 255, 255, 0.9);
@@ -61,7 +60,7 @@
     .topbar {
       height: 52px;
       display: grid;
-      grid-template-columns: auto 1fr auto;
+      grid-template-columns: minmax(0, 1fr) auto auto;
       align-items: center;
       gap: 18px;
       padding: 0 26px;
@@ -70,20 +69,17 @@
     .brand {
       display: flex;
       align-items: baseline;
-      gap: 14px;
     }
 
     .brand h1 {
       margin: 0;
-      font-size: 20px;
+      font-size: 18px;
       line-height: 1;
       font-weight: 800;
       letter-spacing: 0;
     }
 
-    .brand span,
-    .context,
-    .tool-title span {
+    .context {
       color: var(--muted);
       font-size: 13px;
       white-space: nowrap;
@@ -111,39 +107,15 @@
       cursor: pointer;
     }
 
-    .toolbar {
-      position: absolute;
-      left: 44px;
-      right: 44px;
-      top: 84px;
-      height: 52px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 20px;
-      padding: 0 16px;
-    }
-
-    .tool-title {
-      display: flex;
-      align-items: baseline;
-      gap: 14px;
-    }
-
-    .tool-title strong {
-      font-size: 18px;
-      font-weight: 800;
-    }
-
     .actions {
       display: flex;
-      height: 34px;
+      height: 32px;
       border: 1px solid var(--line);
       background: var(--paper);
     }
 
     .actions button {
-      min-width: 92px;
+      min-width: 82px;
       border: 0;
       border-right: 1px solid var(--line);
       background: transparent;
@@ -166,8 +138,8 @@
       position: absolute;
       left: 44px;
       right: 430px;
-      top: 150px;
-      bottom: 44px;
+      top: 84px;
+      bottom: 18px;
       border: 1px solid var(--line);
       background: var(--panel);
       overflow: hidden;
@@ -205,8 +177,8 @@
     }
 
     .col-head {
-      height: 86px;
-      padding: 16px 18px 10px;
+      height: 70px;
+      padding: 15px 18px 10px;
       border-bottom: 1px solid var(--line-soft);
       background: rgba(255, 255, 255, 0.82);
     }
@@ -229,16 +201,9 @@
       letter-spacing: 0;
     }
 
-    .col-head p {
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.25;
-    }
-
     .boundary {
       position: absolute;
-      top: 86px;
+      top: 70px;
       bottom: 0;
       width: 1px;
       background: rgba(10, 22, 20, 0.28);
@@ -291,6 +256,9 @@
     .out-card,
     .live-span {
       position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       border: 2px solid currentColor;
       background: #fff;
       color: var(--input);
@@ -303,7 +271,7 @@
       left: 20px;
       width: 278px;
       height: 66px;
-      padding: 11px 12px;
+      padding: 0 12px;
       background: var(--input-soft);
     }
 
@@ -326,21 +294,8 @@
       text-overflow: ellipsis;
     }
 
-    .source-card span,
-    .event-card span,
-    .out-card span,
-    .live-span span {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 8px;
-      color: #33433f;
-      font-size: 11px;
-      line-height: 1.2;
-    }
-
     .event-card {
-      padding: 12px 14px 10px;
+      padding: 0 14px;
       color: var(--process);
       background: var(--process-soft);
     }
@@ -358,7 +313,7 @@
       left: 1138px;
       width: 286px;
       height: 62px;
-      padding: 12px 13px 10px;
+      padding: 0 13px;
       color: var(--output);
       background: var(--output-soft);
     }
@@ -376,7 +331,7 @@
     .live-span {
       left: 20px;
       height: 58px;
-      padding: 10px 12px;
+      padding: 0 12px;
       z-index: 12;
     }
 
@@ -578,27 +533,14 @@
     }
 
     .interaction-note {
-      position: absolute;
-      left: 348px;
-      top: 104px;
-      z-index: 30;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      padding: 0 12px;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.94);
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-      pointer-events: none;
+      display: none;
     }
 
     .side-inspector {
       position: absolute;
       right: 44px;
-      top: 150px;
-      bottom: 44px;
+      top: 84px;
+      bottom: 18px;
       width: 366px;
       display: flex;
       flex-direction: column;
@@ -757,25 +699,16 @@
     <section class="topbar">
       <div class="brand">
         <h1>章节函数管理</h1>
-        <span>由基准时间轴进入，处理本章输入、加工与输出。</span>
-      </div>
-      <div></div>
-      <div class="context-row">
-        <div class="context">当前章节 <b id="chapterContext">C13 会议结果</b> / 章节函数视图</div>
-        <button class="back-entry" id="backTimeline" type="button">返回基准时间轴</button>
-      </div>
-    </section>
-
-    <section class="toolbar" aria-label="工具栏">
-      <div class="tool-title">
-        <strong>三段式工作流</strong>
-        <span>延续事件是一条跨列事件条；已结束事件通过右侧端点拉线生成或连接新事件。</span>
       </div>
       <div class="actions" aria-label="操作模式">
         <button class="active" data-mode="process">章节加工</button>
         <button data-mode="link">端点拉线</button>
         <button data-mode="create">生成事件</button>
         <button data-mode="output">确认输出</button>
+      </div>
+      <div class="context-row">
+        <div class="context">当前章节 <b id="chapterContext">C13 会议结果</b> / 章节函数视图</div>
+        <button class="back-entry" id="backTimeline" type="button">返回基准时间轴</button>
       </div>
     </section>
 
@@ -784,21 +717,18 @@
         <header class="col-head">
           <small>INPUT</small>
           <h2>章前输入</h2>
-          <p>已结束事件只作为来源；延续事件从这里开始形成同一条跨列事件条。</p>
         </header>
       </div>
       <div class="column process">
         <header class="col-head">
           <small>PROCESS</small>
           <h2>中段处理</h2>
-          <p>从端点拉入空白行可生成新事件；生成后事件条可继续拉长。</p>
         </header>
       </div>
       <div class="column output">
         <header class="col-head">
           <small>OUTPUT</small>
           <h2>章后输出</h2>
-          <p>输出是下一轮全局事件流输入，不是章节时间轴终点。</p>
         </header>
       </div>
 
@@ -815,13 +745,13 @@
         <path id="draftLine" class="draft" hidden></path>
       </svg>
 
-      <div class="interaction-note" id="interactionNote">点击卡片查看摘要；从历史事件右侧端点拖到中段空白行可生成新事件。</div>
+      <div class="interaction-note" id="interactionNote"></div>
 
       <div class="boundary start"></div>
       <div class="boundary end"></div>
 
-      <div class="section-title completed-title"><span>已结束历史事件</span><span>右侧端点可拉关系</span></div>
-      <div class="section-title live-title"><span>章节开始时仍在延续</span><span>同一条可拉伸事件条</span></div>
+      <div class="section-title completed-title"><span>已结束历史事件</span></div>
+      <div class="section-title live-title"><span>章前仍在延续</span></div>
 
       <div class="row r1"></div>
       <div class="row r2"></div>
@@ -833,26 +763,22 @@
 
       <article class="source-card selectable" id="source-material" data-title="采访材料成形" data-kind="已结束历史事件" data-people="叶侠人 / 禹树" data-state="可作为来源" data-relation="可作为章内新事件来源；当前连入会议结果落地与口径重写入口。" data-summary="已结束历史事件。它不进入中段，只从右侧端点拉线，连接或生成章内事件。" style="top:154px;">
         <strong>采访材料成形</strong>
-        <span><em>已完成</em><em>端点可拉线</em></span>
         <i class="anchor out" data-anchor="source-material-out" data-owner="source-material" title="拖出关系线"></i>
       </article>
 
       <article class="source-card selectable" id="source-authority" data-title="解释权预压" data-kind="已结束历史事件" data-people="叶侠人 / 张航远" data-state="可作为来源" data-relation="与采访材料共同驱动会议结果落地，是多对一来源之一。" data-summary="已结束历史事件。它与采访材料合流，指向同一个新建事件。" style="top:232px;">
         <strong>解释权预压</strong>
-        <span><em>已完成</em><em>多对一来源</em></span>
         <i class="anchor out" data-anchor="source-authority-out" data-owner="source-authority" title="拖出关系线"></i>
       </article>
 
       <article class="source-card unused selectable" id="source-sample" data-title="样本成形" data-kind="已结束历史事件" data-people="叶侠人" data-state="未接入本章" data-relation="尚未建立本章关系；可从右侧端点拖线生成新事件。" data-summary="已结束历史事件。尚未建立本章关系，因此不进入中段。" style="top:310px;">
         <strong>样本成形</strong>
-        <span><em>已完成</em><em>未使用</em></span>
         <i class="anchor out" data-anchor="source-sample-out" data-owner="source-sample" title="拖出关系线"></i>
       </article>
 
       <article class="event-card selectable" id="event-meeting" data-title="会议结果落地" data-kind="章内新建事件" data-people="叶侠人 / 张航远 / 禹树" data-state="已接入输出链" data-relation="输入：采访材料成形、解释权预压；输出：会后转争夺。" data-summary="由两个历史事件端点汇入的新建事件。左侧输入锚点接收关系，右侧端点可继续输出。" style="left:560px;top:154px;width:276px;height:58px;">
         <i class="anchor in" data-anchor="event-meeting-in"></i>
         <strong>新建事件：会议结果落地</strong>
-        <span><em>来源：采访材料 + 解释权</em><em>多对一</em></span>
         <i class="anchor out" data-anchor="event-meeting-out" data-owner="event-meeting"></i>
         <i class="resize-handle" title="拉长事件"></i>
       </article>
@@ -860,28 +786,24 @@
       <article class="event-card selectable" id="event-rewrite" data-title="口径重写入口" data-kind="章内新建事件" data-people="叶侠人 / 禹树" data-state="章内生成" data-relation="输入：采访材料成形；暂未确认章后输出。" data-summary="由采访材料一对多派生的新建事件，关系线连接到左侧输入锚点。" style="left:560px;top:310px;width:276px;height:58px;">
         <i class="anchor in" data-anchor="event-rewrite-in"></i>
         <strong>新建事件：口径重写入口</strong>
-        <span><em>由采访材料派生</em><em>一对多</em></span>
         <i class="anchor out" data-anchor="event-rewrite-out" data-owner="event-rewrite"></i>
         <i class="resize-handle" title="拉长事件"></i>
       </article>
 
       <article class="live-span violet selectable" id="live-relief" data-title="救助显形" data-kind="延续事件条" data-people="禹树 / 吕玉" data-state="推进到中段" data-relation="从章前延续进入本章，在中段完成推进，不直接输出到章后。" data-summary="延续事件。它从章前输入开始，是一条连续事件条，当前推进到中段。" style="top:478px;width:750px;">
         <strong>救助显形</strong>
-        <span><em>延续中</em><em>推进到中段</em></span>
         <i class="anchor out" data-anchor="live-relief-out" data-owner="live-relief"></i>
         <i class="resize-handle" title="拖动调整持续范围"></i>
       </article>
 
       <article class="live-span red selectable" id="live-zhang" data-title="张航远被边缘化" data-kind="延续事件条" data-people="张航远 / 禹树" data-state="横跨整章" data-relation="从章前延续，横跨本章并输出为私线偏移压力。" data-summary="延续事件。它从章前输入开始，当前横跨整章到章节结束边界。" style="top:556px;width:1388px;">
         <strong>张航远被边缘化</strong>
-        <span><em>延续中</em><em>横跨整章</em></span>
         <i class="anchor out" data-anchor="live-zhang-out" data-owner="live-zhang"></i>
         <i class="resize-handle" title="拖动调整持续范围"></i>
       </article>
 
       <article class="live-span blue selectable" id="live-pressure" data-title="职业病证据压力" data-kind="延续事件条" data-people="林倩 / 叶侠人" data-state="保留压力" data-relation="从章前延续，在中段保留压力，输出到后续证据压力链。" data-summary="延续事件。它从章前输入开始，当前在中段保留压力。" style="top:634px;width:1020px;">
         <strong>职业病证据压力</strong>
-        <span><em>延续中</em><em>保留压力</em></span>
         <i class="anchor out" data-anchor="live-pressure-out" data-owner="live-pressure"></i>
         <i class="resize-handle" title="拖动调整持续范围"></i>
       </article>
@@ -889,19 +811,16 @@
       <article class="out-card selectable" id="out-meeting" data-title="会后转争夺" data-kind="章后输出事件" data-people="叶侠人 / 禹树" data-state="输出到后续章节" data-relation="来源：会议结果落地；去向：C14-C15 后续争夺。" data-summary="章后输出事件。左侧输入锚点接收从章内事件输出的关系。" style="top:154px;">
         <i class="anchor in" data-anchor="out-meeting-in"></i>
         <strong>会后转争夺</strong>
-        <span><em>由会议结果落地输出</em><em>C14-C15</em></span>
       </article>
 
       <article class="out-card red selectable" id="out-zhang" data-title="私线偏移压力" data-kind="章后输出事件" data-people="张航远 / 禹树" data-state="输出到后续章节" data-relation="来源：张航远被边缘化；去向：C15 私线偏移。" data-summary="章后输出事件。由张航远延续事件输出。" style="top:232px;">
         <i class="anchor in" data-anchor="out-zhang-in"></i>
         <strong>私线偏移压力</strong>
-        <span><em>由张航远线延续</em><em>C15</em></span>
       </article>
 
       <article class="out-card blue selectable" id="out-pressure" data-title="证据压力保留" data-kind="章后输出事件" data-people="林倩 / 叶侠人" data-state="输出到后续章节" data-relation="来源：职业病证据压力；去向：C14-C16 证据链。" data-summary="章后输出事件。由职业病证据压力输出。" style="top:310px;">
         <i class="anchor in" data-anchor="out-pressure-in"></i>
         <strong>证据压力保留</strong>
-        <span><em>职业病证据压力</em><em>C14-C16</em></span>
       </article>
 
     </section>
@@ -1194,7 +1113,6 @@
       article.innerHTML = `
         <i class="anchor in" data-anchor="${id}-in"></i>
         <strong>新建事件：拖线生成</strong>
-        <span><em>由端点拉线生成</em><em>可拉长</em></span>
         <i class="anchor out" data-anchor="${id}-out" data-owner="${id}"></i>
         <i class="resize-handle" title="拉长事件"></i>
       `;
