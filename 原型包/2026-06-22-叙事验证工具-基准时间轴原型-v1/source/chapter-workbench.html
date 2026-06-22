@@ -58,41 +58,50 @@
     }
 
     .topbar {
-      height: 52px;
+      position: absolute;
+      top: 18px;
+      left: 44px;
+      right: 44px;
+      height: 46px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto auto;
+      grid-template-columns: minmax(0, 1fr) auto;
       align-items: center;
-      gap: 18px;
+      gap: 28px;
       padding: 0 26px;
     }
 
-    .brand {
-      display: flex;
-      align-items: baseline;
-    }
-
-    .brand h1 {
+    .topbar-title {
       margin: 0;
-      font-size: 18px;
+      font-size: 15px;
       line-height: 1;
       font-weight: 800;
       letter-spacing: 0;
     }
 
-    .context {
-      color: var(--muted);
+    .topbar-title span {
+      margin-left: 12px;
+      color: #51625f;
       font-size: 13px;
+      font-weight: 400;
+    }
+
+    .route {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #4e5d5a;
+      font-family: Consolas, "Cascadia Mono", "Courier New", monospace;
+      font-size: 11px;
+      letter-spacing: 0.04em;
       white-space: nowrap;
     }
 
-    .context b {
+    .route strong {
       color: var(--process);
     }
 
-    .context-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .route-divider {
+      color: var(--line);
     }
 
     .back-entry {
@@ -134,11 +143,18 @@
       background: var(--ink);
     }
 
+    .canvas-actions {
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      z-index: 12;
+    }
+
     .workspace {
       position: absolute;
       left: 44px;
       right: 430px;
-      top: 84px;
+      top: 64px;
       bottom: 18px;
       border: 1px solid var(--line);
       background: var(--panel);
@@ -539,7 +555,7 @@
     .side-inspector {
       position: absolute;
       right: 44px;
-      top: 84px;
+      top: 64px;
       bottom: 18px;
       width: 366px;
       display: flex;
@@ -697,17 +713,12 @@
 <body>
   <main class="artboard">
     <section class="topbar">
-      <div class="brand">
-        <h1>章节函数管理</h1>
-      </div>
-      <div class="actions" aria-label="操作模式">
-        <button class="active" data-mode="process">章节加工</button>
-        <button data-mode="link">端点拉线</button>
-        <button data-mode="create">生成事件</button>
-        <button data-mode="output">确认输出</button>
-      </div>
-      <div class="context-row">
-        <div class="context">当前章节 <b id="chapterContext">C13 会议结果</b> / 章节函数视图</div>
+      <div class="topbar-title">章节函数管理<span>承接基准时间轴中的章节切片。</span></div>
+      <div class="route">
+        <span>章节函数</span>
+        <span class="route-divider">/</span>
+        <span>当前章节 <strong id="chapterContext">C13 会议结果</strong></span>
+        <span class="route-divider">/</span>
         <button class="back-entry" id="backTimeline" type="button">返回基准时间轴</button>
       </div>
     </section>
@@ -724,6 +735,12 @@
           <small>PROCESS</small>
           <h2>中段处理</h2>
         </header>
+        <div class="actions canvas-actions" aria-label="操作模式">
+          <button class="active" data-mode="process">章节加工</button>
+          <button data-mode="link">端点拉线</button>
+          <button data-mode="create">生成事件</button>
+          <button data-mode="output">确认输出</button>
+        </div>
       </div>
       <div class="column output">
         <header class="col-head">
