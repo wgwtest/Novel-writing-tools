@@ -568,14 +568,14 @@
     };
 
     const tracks = [
-      { id: "main", name: "故事主轴", sub: "跨章节推进", expanded: false, characters: [] },
-      { id: "interview", name: "采访线", sub: "叶依人行动", expanded: true, characters: ["yiren", "zhang", "yushu"] },
-      { id: "temple", name: "大仙祠线", sub: "解释权争夺", expanded: true, characters: ["yushu", "lvyu", "yiren"] },
-      { id: "media", name: "电视台线", sub: "口径和资源", expanded: false, characters: ["yiren", "zhang"] },
-      { id: "proof", name: "职业病证据线", sub: "材料和边界", expanded: false, characters: ["yiren", "linqian"] },
-      { id: "zhang", name: "张航远线", sub: "目标漂移", expanded: true, characters: ["zhang", "yushu"] },
-      { id: "lvyu", name: "吕玉线", sub: "后段接管", expanded: false, characters: ["lvyu"] },
-      { id: "fragment", name: "碎片伏笔", sub: "必须对齐章节", expanded: false, characters: ["yushu"] }
+      { id: "main", name: "故事主轴", sub: "跨章节推进", expanded: false, characters: [], color: "#536761", soft: "#edf2f0" },
+      { id: "interview", name: "采访线", sub: "叶依人行动", expanded: true, characters: ["yiren", "zhang", "yushu"], color: "#087268", soft: "#dcefed" },
+      { id: "temple", name: "大仙祠线", sub: "解释权争夺", expanded: true, characters: ["yushu", "lvyu", "yiren"], color: "#67558a", soft: "#e7e2ef" },
+      { id: "media", name: "电视台线", sub: "口径和资源", expanded: false, characters: ["yiren", "zhang"], color: "#315f83", soft: "#dbe8f1" },
+      { id: "proof", name: "职业病证据线", sub: "材料和边界", expanded: false, characters: ["yiren", "linqian"], color: "#4f6f5f", soft: "#e1ebe6" },
+      { id: "zhang", name: "张航远线", sub: "目标漂移", expanded: true, characters: ["zhang", "yushu"], color: "#7a4f68", soft: "#eadfe5" },
+      { id: "lvyu", name: "吕玉线", sub: "后段接管", expanded: false, characters: ["lvyu"], color: "#315f83", soft: "#dbe8f1" },
+      { id: "fragment", name: "碎片伏笔", sub: "必须对齐章节", expanded: false, characters: ["yushu"], color: "#a66a10", soft: "#f3e4c8" }
     ];
 
     const events = [
@@ -647,12 +647,18 @@
     const hitRegions = [];
     let rowLayout = [];
 
+    function legacyVisualState(tone, visibility = "explicit") {
+      if (visibility === "background") return "background";
+      if (tone === "warn" || tone === "risk" || tone === "key") return tone;
+      return "normal";
+    }
+
     function storyEvent(id, track, startAt, endAt, title, code, tone, input, output, risk) {
-      return { id, kind: "story", track, startAt, endAt, title, code, tone, input, output, risk };
+      return { id, kind: "story", track, startAt, endAt, title, code, visualState: legacyVisualState(tone), input, output, risk };
     }
 
     function characterEvent(id, track, character, startAt, endAt, title, code, tone, input, output, risk, visibility = "explicit") {
-      return { id, kind: "character", track, character, startAt, endAt, title, code, tone, input, output, risk, visibility };
+      return { id, kind: "character", track, character, startAt, endAt, title, code, visualState: legacyVisualState(tone, visibility), input, output, risk, visibility };
     }
 
     function applyStoryData(data) {
@@ -778,13 +784,46 @@
       return date.getTime();
     }
 
-    function toneColors(tone) {
-      if (tone === "main") return [colors.tealSoft, colors.teal];
-      if (tone === "warn") return [colors.amberSoft, colors.amber];
-      if (tone === "risk") return [colors.redSoft, colors.red];
-      if (tone === "media") return [colors.blueSoft, colors.blue];
-      if (tone === "temple") return [colors.violetSoft, colors.violet];
-      return ["#e7eceb", "#53625f"];
+    function normalizeVisualState(item) {
+      if (item.visualState) return item.visualState;
+      if (item.visibility === "background") return "background";
+      return legacyVisualState(item.tone);
+    }
+
+    function stateColor(visualState) {
+      if (visualState === "warn") return colors.amber;
+      if (visualState === "risk") return colors.red;
+      if (visualState === "key") return colors.ink;
+      if (visualState === "continuing") return colors.blue;
+      return null;
+    }
+
+    function trackVisual(track) {
+      return {
+        fill: track?.soft || colors.tealSoft,
+        stroke: track?.color || colors.teal
+      };
+    }
+
+    function eventVisual(item) {
+      const track = trackById(item.track);
+      const visualState = normalizeVisualState(item);
+      const character = item.kind === "character" ? characterById(item.character) : null;
+      if (character) {
+        return {
+          fill: visualState === "background" ? "#fff" : character.soft,
+          stroke: character.color,
+          marker: stateColor(visualState),
+          visualState
+        };
+      }
+      const base = trackVisual(track);
+      return {
+        fill: base.fill,
+        stroke: base.stroke,
+        marker: stateColor(visualState),
+        visualState
+      };
     }
 
     function trackById(id) {
@@ -1043,41 +1082,70 @@
         const height = isCharacter ? 20 : 38;
         const y = row.y + (isCharacter ? Math.round((row.height - height) / 2) : Math.max(4, (row.height - height) / 2));
         const width = (timeToWorld(item.endAt) - timeToWorld(item.startAt)) * state.scale - 20;
-        if (x + width < world.labelWidth || x > w || width < 22) return;
-        const [storyFill, storyStroke] = toneColors(item.tone);
-        const fill = isCharacter ? character.soft : storyFill;
-        const stroke = isCharacter ? character.color : storyStroke;
+        const clipped = clippedEventRect(x, width, w);
+        if (width < 22 || clipped.width < 22) return;
+        const drawX = clipped.x;
+        const drawWidth = clipped.width;
+        const visual = eventVisual(item);
+        const fill = visual.fill;
+        const stroke = visual.stroke;
+        const visualState = visual.visualState;
         const selected = state.selected?.type === "event" && state.selected.id === item.id;
 
         ctx.save();
         ctx.fillStyle = fill;
-        if (isBackground) ctx.globalAlpha = 0.42;
-        ctx.fillRect(x, y, width, height);
+        if (isBackground) ctx.globalAlpha = 0.72;
+        ctx.fillRect(drawX, y, drawWidth, height);
         ctx.globalAlpha = 1;
         ctx.strokeStyle = selected ? colors.ink : stroke;
         ctx.lineWidth = selected ? (isCharacter ? 3 : 4) : (isBackground ? 1.5 : 1);
         if (isBackground) ctx.setLineDash([7, 5]);
-        ctx.strokeRect(x, y, width, height);
+        ctx.strokeRect(drawX, y, drawWidth, height);
         ctx.setLineDash([]);
         ctx.lineWidth = 1;
-        ctx.fillStyle = stroke;
         if (!isBackground) {
-          ctx.fillRect(x, y + height - (isCharacter ? 3 : 4), width, isCharacter ? 3 : 4);
+          if (!isCharacter && visualState === "warn") {
+            ctx.fillStyle = visual.marker;
+            ctx.fillRect(drawX, y, 7, height);
+          } else if (!isCharacter && visualState === "risk") {
+            ctx.fillStyle = visual.marker;
+            ctx.fillRect(drawX, y + height - 5, drawWidth, 5);
+          } else if (!isCharacter && visualState === "key") {
+            ctx.strokeStyle = colors.ink;
+            ctx.lineWidth = 2;
+            ctx.strokeRect(drawX + 3, y + 3, drawWidth - 6, height - 6);
+          } else {
+            ctx.fillStyle = stroke;
+            ctx.fillRect(drawX, y + height - (isCharacter ? 3 : 4), drawWidth, isCharacter ? 3 : 4);
+          }
+        }
+        if (!isCharacter && visual.marker && visualState !== "key" && drawWidth > 76) {
+          const tag = visualState.toUpperCase();
+          const tagWidth = visualState === "warn" ? 34 : 30;
+          const tagX = drawX + drawWidth - tagWidth - 8;
+          const tagY = y + 7;
+          ctx.fillStyle = "#fff";
+          ctx.strokeStyle = visual.marker;
+          ctx.lineWidth = 1;
+          ctx.strokeRect(tagX, tagY, tagWidth, 14);
+          ctx.fillStyle = visual.marker;
+          ctx.font = "700 8px Consolas";
+          ctx.fillText(tag, tagX + 4, tagY + 10);
         }
 
         ctx.fillStyle = colors.ink;
         ctx.font = isCharacter ? "700 9px Microsoft YaHei UI" : "700 12px Microsoft YaHei UI";
         if (isBackground) ctx.fillStyle = "#34413f";
         const label = isCharacter ? `${character.short} ${item.title}` : item.title;
-        clipText(label, x + 8, y + (isCharacter ? 13 : 18), Math.max(20, width - 16));
+        clipText(label, drawX + 8, y + (isCharacter ? 13 : 18), Math.max(20, drawWidth - 16));
         if (!isCharacter) {
           ctx.fillStyle = "#3c4b48";
           ctx.font = "10px Consolas";
-          clipText(item.code, x + 10, y + 31, Math.max(20, width - 20));
+          clipText(item.code, drawX + 10, y + 31, Math.max(20, drawWidth - 20));
         }
         ctx.restore();
 
-        hitRegions.push({ type: "event", id: item.id, x, y: y - 3, w: width, h: height + 6 });
+        hitRegions.push({ type: "event", id: item.id, x: drawX, y: y - 3, w: drawWidth, h: height + 6 });
       });
 
       ctx.restore();
@@ -1113,7 +1181,25 @@
       ctx.fillText(output, x, y);
     }
 
+    function clippedEventRect(x, width, viewportWidth) {
+      const left = Math.max(x, world.labelWidth);
+      const right = Math.min(x + width, viewportWidth);
+      return { x: left, width: Math.max(0, right - left) };
+    }
+
+    function labelColumnHitTest(x, y) {
+      if (x > world.labelWidth) return null;
+      for (let i = hitRegions.length - 1; i >= 0; i -= 1) {
+        const r = hitRegions[i];
+        if (r.type !== "track" && r.type !== "character") continue;
+        if (x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h) return r;
+      }
+      return null;
+    }
+
     function hitTest(x, y) {
+      const labelHit = labelColumnHitTest(x, y);
+      if (labelHit) return labelHit;
       for (let i = hitRegions.length - 1; i >= 0; i -= 1) {
         const r = hitRegions[i];
         if (x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h) return r;
@@ -1160,6 +1246,7 @@
       const track = trackById(item.track);
       const character = item.kind === "character" ? characterById(item.character) : null;
       const isBackground = item.kind === "character" && item.visibility === "background";
+      const visualState = normalizeVisualState(item);
       const timeRange = formatFullRange(item.startAt, item.endAt);
       const chapterRefs = chapterRefsForRange(item.startAt, item.endAt);
       const chapterLabel = chapterRefs.length > 0 ? chapterRefs.join("/") : "未落入章节";
@@ -1174,7 +1261,7 @@
         : "当前只是选中故事线事件块。需要点击“拆解事件”，才进入事件检查器。";
       const personTag = character ? `<span class="tag">${character.name}</span>` : "";
       const visibilityTag = character ? `<span class="tag">${isBackground ? "BACKGROUND" : "EXPLICIT"}</span>` : "";
-      document.getElementById("selectionTags").innerHTML = `<span class="tag">${chapterLabel}</span><span class="tag">${track.name}</span>${personTag}${visibilityTag}<span class="tag">${item.tone.toUpperCase()}</span>`;
+      document.getElementById("selectionTags").innerHTML = `<span class="tag">${chapterLabel}</span><span class="tag">${track.name}</span>${personTag}${visibilityTag}<span class="tag">${visualState.toUpperCase()}</span>`;
       document.getElementById("summaryCoord").textContent = `${timeRange} / ${chapterLabel}`;
       document.getElementById("summaryTrack").textContent = character ? `${track.name} / ${character.name}` : track.name;
       document.getElementById("summaryInput").textContent = item.input;

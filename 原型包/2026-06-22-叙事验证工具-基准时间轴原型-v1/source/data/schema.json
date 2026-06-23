@@ -70,13 +70,15 @@
     },
     "track": {
       "type": "object",
-      "required": ["id", "name", "sub", "expanded", "characters"],
+      "required": ["id", "name", "sub", "expanded", "characters", "color", "soft"],
       "additionalProperties": false,
       "properties": {
         "id": { "type": "string" },
         "name": { "type": "string" },
         "sub": { "type": "string" },
         "expanded": { "type": "boolean" },
+        "color": { "type": "string" },
+        "soft": { "type": "string" },
         "characters": {
           "type": "array",
           "items": { "type": "string" }
@@ -85,7 +87,7 @@
     },
     "event": {
       "type": "object",
-      "required": ["id", "kind", "track", "startAt", "endAt", "title", "code", "tone", "input", "output", "risk"],
+      "required": ["id", "kind", "track", "startAt", "endAt", "title", "code", "visualState", "input", "output", "risk"],
       "additionalProperties": false,
       "properties": {
         "id": { "type": "string" },
@@ -96,7 +98,8 @@
         "endAt": { "type": "string" },
         "title": { "type": "string" },
         "code": { "type": "string" },
-        "tone": { "type": "string" },
+        "visualState": { "enum": ["normal", "warn", "risk", "key", "background", "continuing"] },
+        "tone": { "type": "string", "description": "旧版兼容字段；新数据不应依赖 tone 决定主色。" },
         "input": { "type": "string" },
         "output": { "type": "string" },
         "risk": { "type": "string" },
